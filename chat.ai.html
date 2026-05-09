@@ -3,241 +3,758 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RIPto AI | Vip Edition</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <style>
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif;}
-body{background:#050816;color:white;height:100vh;overflow:hidden;}
-#loader{position:fixed;inset:0;background:#050816;display:flex;justify-content:center;align-items:center;z-index:99999;flex-direction:column;}
-.loader-text{font-size:38px;font-weight:700;background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pulse 2s infinite;text-align:center;line-height:1.3;}
-.loader-text span{display:block;font-size:18px;margin-top:10px;letter-spacing:4px;color:white;-webkit-text-fill-color:white;}
-@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
-#sidebar{position:fixed;left:-300px;top:0;width:300px;height:100%;background:rgba(10,10,20,.95);backdrop-filter:blur(25px);transition:.4s;z-index:999;padding:20px;border-right:1px solid rgba(255,255,255,.08);overflow:auto;}
-#sidebar.open{left:0;}
-.history-item{background:#111827;padding:14px;border-radius:14px;margin-bottom:10px;cursor:pointer;transition:.3s;font-size:14px;display:flex;align-items:center;gap:10px;}
-.history-item:hover{background:#1f2937;}
-.history-item input{width:18px;height:18px;}
-header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.5);backdrop-filter:blur(20px);}
-.logo-area{display:flex;align-items:center;gap:12px;}
-.main-logo{width:42px;height:42px;border-radius:14px;object-fit:cover;border:2px solid #8b5cf6;}
-.logo-text{font-size:22px;font-weight:700;}
-.logo-text span{color:#8b5cf6;}
-#chat-box{height:calc(100vh - 150px);overflow-y:auto;padding:20px;}
-.message{margin-bottom:20px;display:flex;animation:fade .4s ease;}
-@keyframes fade{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
-.user{justify-content:flex-end;}
-.ai{justify-content:flex-start;}
-.user .bubble{background:linear-gradient(135deg,#7c3aed,#ec4899);padding:14px 18px;border-radius:20px 20px 5px 20px;max-width:80%;}
-.ai .bubble{background:#111827;padding:16px;border-radius:20px;max-width:85%;border:1px solid rgba(255,255,255,.05);position:relative;}
-.copy-btn{position:absolute;top:10px;right:10px;background:#8b5cf6;border:none;padding:6px 10px;border-radius:8px;font-size:12px;color:white;cursor:pointer;}
-#welcome{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
-.welcome-logo{width:100px;height:100px;border-radius:30px;object-fit:cover;border:4px solid #8b5cf6;margin-bottom:25px;animation:pulse 2s infinite;}
-.welcome-title{font-size:42px;font-weight:700;}
-.welcome-title span{color:#8b5cf6;}
-.welcome-sub{margin-top:10px;font-size:16px;color:#9ca3af;}
-footer{height:80px;padding:15px;background:linear-gradient(to top,#050816,transparent);}
-.input-box{max-width:900px;margin:auto;display:flex;align-items:center;gap:10px;background:#111827;padding:10px 15px;border-radius:25px;border:1px solid rgba(255,255,255,.08);}
-.input-box input{flex:1;background:none;border:none;outline:none;color:white;font-size:15px;}
-.send-btn{width:45px;height:45px;border:none;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:white;font-size:18px;cursor:pointer;}
-#menu{position:absolute;right:20px;top:70px;width:220px;background:#111827;border-radius:15px;overflow:hidden;display:none;z-index:9999;border:1px solid rgba(255,255,255,.06);}
-.menu-item{padding:14px;cursor:pointer;transition:.3s;font-size:14px;}
-.menu-item:hover{background:#1f2937;}
-.history-controls{display:flex;gap:10px;margin-bottom:15px;}
-.history-controls button{flex:1;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;cursor:pointer;font-size:13px;}
-pre{background:#0b1220;padding:15px;border-radius:15px;overflow:auto;margin-top:10px;position:relative;}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Outfit',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+height:100vh;
+overflow:hidden;
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+inset:0;
+background:#050816;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+flex-direction:column;
+}
+
+.loader-text{
+font-size:38px;
+font-weight:700;
+background:linear-gradient(135deg,#8b5cf6,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:pulse 2s infinite;
+text-align:center;
+line-height:1.3;
+}
+
+.loader-text span{
+display:block;
+font-size:18px;
+margin-top:10px;
+letter-spacing:4px;
+color:white;
+-webkit-text-fill-color:white;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+/* SIDEBAR */
+
+#sidebar{
+position:fixed;
+left:-300px;
+top:0;
+width:300px;
+height:100%;
+background:rgba(10,10,20,.95);
+backdrop-filter:blur(25px);
+transition:.4s;
+z-index:999;
+padding:20px;
+border-right:1px solid rgba(255,255,255,.08);
+overflow:auto;
+}
+
+#sidebar.open{
+left:0;
+}
+
+.history-item{
+background:#111827;
+padding:14px;
+border-radius:14px;
+margin-bottom:10px;
+cursor:pointer;
+transition:.3s;
+font-size:14px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.history-item:hover{
+background:#1f2937;
+}
+
+.history-item input{
+width:18px;
+height:18px;
+}
+
+/* HEADER */
+
+header{
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+border-bottom:1px solid rgba(255,255,255,.06);
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(20px);
+}
+
+.logo-area{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.main-logo{
+width:42px;
+height:42px;
+border-radius:14px;
+object-fit:cover;
+border:2px solid #8b5cf6;
+}
+
+.logo-text{
+font-size:22px;
+font-weight:700;
+}
+
+.logo-text span{
+color:#8b5cf6;
+}
+
+/* CHAT */
+
+#chat-box{
+height:calc(100vh - 150px);
+overflow-y:auto;
+padding:20px;
+padding-bottom:90px;
+}
+
+.message{
+margin-bottom:20px;
+display:flex;
+animation:fade .4s ease;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(15px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.user{
+justify-content:flex-end;
+}
+
+.ai{
+justify-content:flex-start;
+}
+
+.user .bubble{
+background:linear-gradient(135deg,#7c3aed,#ec4899);
+padding:14px 18px;
+border-radius:20px 20px 5px 20px;
+max-width:80%;
+}
+
+.ai .bubble{
+background:#111827;
+padding:16px;
+border-radius:20px;
+max-width:85%;
+border:1px solid rgba(255,255,255,.05);
+position:relative;
+}
+
+/* COPY BUTTON */
+
+.copy-btn{
+position:absolute;
+top:10px;
+right:10px;
+background:#8b5cf6;
+border:none;
+padding:6px 10px;
+border-radius:8px;
+font-size:12px;
+color:white;
+cursor:pointer;
+}
+
+/* WELCOME */
+
+#welcome{
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.welcome-logo{
+width:100px;
+height:100px;
+border-radius:30px;
+object-fit:cover;
+border:4px solid #8b5cf6;
+margin-bottom:25px;
+animation:pulse 2s infinite;
+}
+
+.welcome-title{
+font-size:42px;
+font-weight:700;
+}
+
+.welcome-title span{
+color:#8b5cf6;
+}
+
+.welcome-sub{
+margin-top:10px;
+font-size:16px;
+color:#9ca3af;
+}
+
+/* INPUT */
+
+footer{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:80px;
+padding:15px;
+background:linear-gradient(to top,#050816,transparent);
+z-index:100;
+}
+
+.input-box{
+max-width:900px;
+margin:auto;
+display:flex;
+align-items:center;
+gap:10px;
+background:#111827;
+padding:10px 15px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.input-box input{
+flex:1;
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:15px;
+}
+
+.send-btn{
+width:45px;
+height:45px;
+border:none;
+border-radius:50%;
+background:linear-gradient(135deg,#8b5cf6,#ec4899);
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+/* MENU */
+
+#menu{
+position:absolute;
+right:20px;
+top:70px;
+width:220px;
+background:#111827;
+border-radius:15px;
+overflow:hidden;
+display:none;
+z-index:9999;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.menu-item{
+padding:14px;
+cursor:pointer;
+transition:.3s;
+font-size:14px;
+}
+
+.menu-item:hover{
+background:#1f2937;
+}
+
+.history-controls{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.history-controls button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#7c3aed,#ec4899);
+color:white;
+cursor:pointer;
+font-size:13px;
+}
+
+pre{
+background:#0b1220;
+padding:15px;
+border-radius:15px;
+overflow:auto;
+margin-top:10px;
+position:relative;
+}
+
 </style>
 </head>
 <body>
 
+<!-- LOADER -->
+
 <div id="loader">
-<div class="loader-text">RIPto AI<span>BEST ALL TIME</span></div>
+
+<div class="loader-text">
+RIPto AI
+<span>BEST ALL TIME</span>
 </div>
+
+</div>
+
+<!-- SIDEBAR -->
 
 <div id="sidebar">
+
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+
 <h2>History</h2>
-<button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;"><i class="fa-solid fa-xmark"></i></button>
+
+<button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;">
+<i class="fa-solid fa-xmark"></i>
+</button>
+
 </div>
+
 <div class="history-controls">
-<button onclick="deleteSelectedHistory()">Delete Selected</button>
-<button onclick="deleteAllHistory()">Delete All</button>
+
+<button onclick="deleteSelectedHistory()">
+Delete Selected
+</button>
+
+<button onclick="deleteAllHistory()">
+Delete All
+</button>
+
 </div>
+
 <div id="history"></div>
+
 </div>
+
+<!-- HEADER -->
 
 <header>
+
 <div class="logo-area">
-<button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;"><i class="fa-solid fa-bars"></i></button>
-<img id="main-logo-img" class="main-logo">
-<div class="logo-text">RIPto <span>AI</span></div>
+
+<button onclick="toggleSidebar()" style="background:none;border:none;color:white;font-size:20px;">
+<i class="fa-solid fa-bars"></i>
+</button>
+
+<img id="mainLogoImg" class="main-logo">
+
+<div class="logo-text">
+RIPto <span>AI</span>
 </div>
-<button onclick="toggleMenu()" style="background:none;border:none;color:white;font-size:18px;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+
+</div>
+
+<button onclick="toggleMenu()" style="background:none;border:none;color:white;font-size:18px;">
+<i class="fa-solid fa-ellipsis-vertical"></i>
+</button>
+
 </header>
 
+<!-- MENU -->
+
 <div id="menu">
-<div class="menu-item" onclick="newChat()"><i class="fa-solid fa-trash"></i> Clear Current Chat</div>
-<div class="menu-item" id="tg-link"><i class="fa-brands fa-telegram"></i> Join Telegram</div>
-<div class="menu-item"><i class="fa-solid fa-circle-info"></i> Version 10.0</div>
+
+<div class="menu-item" onclick="newChat()">
+<i class="fa-solid fa-trash"></i> Clear Current Chat
 </div>
+
+<div class="menu-item" id="tgBtn">
+<i class="fa-brands fa-telegram"></i> Join Telegram
+</div>
+
+<div class="menu-item">
+<i class="fa-solid fa-circle-info"></i> Version 10.0
+</div>
+
+</div>
+
+<!-- CHAT -->
 
 <div id="chat-box">
+
 <div id="welcome">
-<img id="welcome-logo-img" class="welcome-logo">
-<div class="welcome-title">Welcome to <span>RIPto AI</span></div>
-<div class="welcome-sub">Ultra futuristic premium AI assistant</div>
-</div>
-<div id="messages"></div>
+
+<img id="welcomeLogoImg" class="welcome-logo">
+
+<div class="welcome-title">
+Welcome to <span>RIPto AI</span>
 </div>
 
-<footer>
-<div class="input-box">
-<input type="text" id="input" placeholder="Ask anything..." autocomplete="off">
-<button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-arrow-up"></i></button>
+<div class="welcome-sub">
+Ultra futuristic premium AI assistant
 </div>
+
+</div>
+
+<div id="messages"></div>
+
+</div>
+
+<!-- INPUT -->
+
+<footer>
+
+<div class="input-box">
+
+<input 
+type="text" 
+id="input"
+placeholder="Ask anything..."
+autocomplete="off"
+>
+
+<button class="send-btn" onclick="sendMessage()">
+<i class="fa-solid fa-arrow-up"></i>
+</button>
+
+</div>
+
 </footer>
 
 <script>
-// ---- RIPto Ai Protect ----
-const _c = {
-  i: 'aHR0cDovL3JpcHRvaW1hZ2Vob3N0LjQyd2ViLmlvL3VwbG9hZHMvYWUwN2IzZDEwMzA2NjViNi5wbmc=',
-  a: 'aHR0cHM6Ly9hcGktcmViaXgudmVyY2VsLmFwcC9hcGkvZ3B0LTU/cT0=',
-  t: 'aHR0cHM6Ly90Lm1lL2hhY2tpbmdfdG9vbF90dXRvcmlhbA=='
+
+// ---- PROTECTED CONFIG (Base64) ----
+const _b = {
+  img : 'aHR0cDovL3JpcHRvaW1hZ2Vob3N0LjQyd2ViLmlvL3VwbG9hZHMvYWUwN2IzZDEwMzA2NjViNi5wbmc=',
+  api : 'aHR0cHM6Ly9hcGktcmViaXgudmVyY2VsLmFwcC9hcGkvZ3B0LTU/cT0=',
+  tg  : 'aHR0cHM6Ly90Lm1lL2hhY2tpbmdfdG9vbF90dXRvcmlhbA=='
 };
-const _d = s => atob(s);
 
-// Apply config at runtime
-const _imgUrl = _d(_c.i);
-const _apiUrl = _d(_c.a);
-const _tgUrl  = _d(_c.t);
+const IMG_URL = atob(_b.img);
+const API     = atob(_b.api);
+const TG_URL  = atob(_b.tg);
 
-document.getElementById('main-logo-img').src  = _imgUrl;
-document.getElementById('welcome-logo-img').src = _imgUrl;
-document.getElementById('tg-link').onclick = () => window.open(_tgUrl);
+// Apply images
+document.getElementById('mainLogoImg').src   = IMG_URL;
+document.getElementById('welcomeLogoImg').src = IMG_URL;
 
-// ---- APP LOGIC ----
+// Apply telegram link
+document.getElementById('tgBtn').onclick = () => window.open(TG_URL);
+
+// ---- APP ----
+
 const input      = document.getElementById('input');
 const messages   = document.getElementById('messages');
 const welcome    = document.getElementById('welcome');
 const historyBox = document.getElementById('history');
 
-window.onload = () => {
-  setTimeout(() => {
-    document.getElementById('loader').style.display = 'none';
-    loadHistory();
-  }, 2000);
-};
+document.addEventListener('DOMContentLoaded', () => {
+
+setTimeout(() => {
+
+document.getElementById('loader').style.display = 'none';
+
+loadHistory();
+
+},800);
+
+});
 
 function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
+
+document.getElementById('sidebar').classList.toggle('open');
+
 }
 
 function toggleMenu(){
-  const menu = document.getElementById('menu');
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+
+const menu = document.getElementById('menu');
+
+menu.style.display =
+menu.style.display === 'block'
+? 'none'
+: 'block';
+
 }
 
 async function sendMessage(){
-  const text = input.value.trim();
-  if(!text) return;
-  welcome.style.display = 'none';
-  addMessage('user', text);
-  saveHistory(text);
-  input.value = '';
-  const aiDiv = addMessage('ai', 'Typing...');
-  try {
-    const res  = await fetch(_apiUrl + encodeURIComponent(text));
-    const data = await res.json();
-    let response = data.results || "No response.";
-    response = marked.parse(response);
-    aiDiv.innerHTML = response;
-    addCopyButtons();
-  } catch {
-    aiDiv.innerHTML = "Server Error.";
-  }
+
+const text = input.value.trim();
+
+if(!text) return;
+
+welcome.style.display = 'none';
+
+addMessage('user',text);
+
+saveHistory(text);
+
+input.value = '';
+
+const aiDiv = addMessage('ai','Typing...');
+
+try{
+
+const res = await fetch(API + encodeURIComponent(text));
+
+const data = await res.json();
+
+let response = data.results || "No response.";
+
+response = marked.parse(response);
+
+aiDiv.innerHTML = response;
+
+addCopyButtons();
+
+}catch{
+
+aiDiv.innerHTML = "Server Error.";
+
 }
 
-function addMessage(type, text){
-  const msg = document.createElement('div');
-  msg.className = `message ${type}`;
-  if(type === 'ai'){
-    msg.innerHTML = `<div class="bubble"><div class="content">${text}</div></div>`;
-  } else {
-    msg.innerHTML = `<div class="bubble">${text}</div>`;
-  }
-  messages.appendChild(msg);
-  document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
-  return msg.querySelector('.content') || msg.querySelector('.bubble');
+}
+
+function addMessage(type,text){
+
+const msg = document.createElement('div');
+
+msg.className = `message ${type}`;
+
+if(type === 'ai'){
+
+msg.innerHTML = `
+<div class="bubble">
+<div class="content">${text}</div>
+</div>
+`;
+
+}else{
+
+msg.innerHTML = `
+<div class="bubble">${text}</div>
+`;
+
+}
+
+messages.appendChild(msg);
+
+document.getElementById('chat-box').scrollTop =
+document.getElementById('chat-box').scrollHeight;
+
+return msg.querySelector('.content') || msg.querySelector('.bubble');
+
 }
 
 function addCopyButtons(){
-  document.querySelectorAll('pre').forEach(pre => {
-    if(pre.querySelector('.copy-btn')) return;
-    const btn = document.createElement('button');
-    btn.innerText = 'Copy';
-    btn.className = 'copy-btn';
-    btn.onclick = () => {
-      navigator.clipboard.writeText(pre.innerText);
-      btn.innerText = 'Copied';
-      setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
-    };
-    pre.appendChild(btn);
-  });
+
+document.querySelectorAll('pre').forEach(pre=>{
+
+if(pre.querySelector('.copy-btn')) return;
+
+const btn = document.createElement('button');
+
+btn.innerText = 'Copy';
+
+btn.className = 'copy-btn';
+
+btn.onclick = ()=>{
+
+const code = pre.innerText;
+
+navigator.clipboard.writeText(code);
+
+btn.innerText = 'Copied';
+
+setTimeout(()=>{
+
+btn.innerText = 'Copy';
+
+},2000);
+
+};
+
+pre.appendChild(btn);
+
+});
+
 }
 
-input.addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
+input.addEventListener('keypress',e=>{
+
+if(e.key === 'Enter'){
+
+sendMessage();
+
+}
+
+});
+
+/* HISTORY SYSTEM */
 
 function saveHistory(text){
-  let history = JSON.parse(localStorage.getItem('ripto_history') || '[]');
-  history.unshift(text);
-  if(history.length > 30) history.pop();
-  localStorage.setItem('ripto_history', JSON.stringify(history));
-  loadHistory();
+
+let history =
+JSON.parse(localStorage.getItem('ripto_history') || '[]');
+
+history.unshift(text);
+
+if(history.length > 30){
+
+history.pop();
+
+}
+
+localStorage.setItem(
+'ripto_history',
+JSON.stringify(history)
+);
+
+loadHistory();
+
 }
 
 function loadHistory(){
-  let history = JSON.parse(localStorage.getItem('ripto_history') || '[]');
-  historyBox.innerHTML = history.map((item, index) => `
-    <div class="history-item">
-      <input type="checkbox" class="history-check" value="${index}">
-      <div onclick="quickAsk('${item.replace(/'/g, "")}')" style="flex:1;">${item}</div>
-    </div>
-  `).join('');
+
+let history =
+JSON.parse(localStorage.getItem('ripto_history') || '[]');
+
+historyBox.innerHTML = history.map((item,index)=>`
+
+<div class="history-item">
+
+<input type="checkbox" class="history-check" value="${index}">
+
+<div onclick="quickAsk('${item.replace(/'/g,"")}')"
+style="flex:1;">
+${item}
+</div>
+
+</div>
+
+`).join('');
+
 }
 
 function quickAsk(text){
-  input.value = text;
-  toggleSidebar();
-  sendMessage();
+
+input.value = text;
+
+toggleSidebar();
+
+sendMessage();
+
 }
 
 function deleteSelectedHistory(){
-  let history = JSON.parse(localStorage.getItem('ripto_history') || '[]');
-  const checks  = document.querySelectorAll('.history-check:checked');
-  const indexes = [...checks].map(c => parseInt(c.value)).sort((a,b) => b-a);
-  indexes.forEach(i => { history.splice(i,1); });
-  localStorage.setItem('ripto_history', JSON.stringify(history));
-  loadHistory();
+
+let history =
+JSON.parse(localStorage.getItem('ripto_history') || '[]');
+
+const checks =
+document.querySelectorAll('.history-check:checked');
+
+const indexes = [...checks]
+.map(c=>parseInt(c.value))
+.sort((a,b)=>b-a);
+
+indexes.forEach(i=>{
+
+history.splice(i,1);
+
+});
+
+localStorage.setItem(
+'ripto_history',
+JSON.stringify(history)
+);
+
+loadHistory();
+
 }
 
 function deleteAllHistory(){
-  localStorage.removeItem('ripto_history');
-  loadHistory();
+
+localStorage.removeItem('ripto_history');
+
+loadHistory();
+
 }
 
 function newChat(){
-  messages.innerHTML = '';
-  welcome.style.display = 'flex';
-  document.getElementById('menu').style.display = 'none';
+
+messages.innerHTML = '';
+
+welcome.style.display = 'flex';
+
+document.getElementById('menu').style.display = 'none';
+
 }
 
 window.onclick = function(e){
-  if(!e.target.closest('.fa-ellipsis-vertical')){
-    document.getElementById('menu').style.display = 'none';
-  }
+
+if(!e.target.closest('.fa-ellipsis-vertical')){
+
+document.getElementById('menu').style.display = 'none';
+
+}
+
 };
+
 </script>
+
 </body>
 </html>
